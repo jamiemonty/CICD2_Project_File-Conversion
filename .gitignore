@@ -1,0 +1,49 @@
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+venv/
+
+# Python
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+ENV/
+env/
+.env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OneDrive specific
+desktop.ini
+.DS_Store
+OneDrive/
+**/OneDrive*/**
+!CICD2_Project(fileConverter)/**
+
+# Misc
+*.log
+.coverage
+htmlcov/
+.pytest_cache/
