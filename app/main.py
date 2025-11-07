@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes import convert
+from app.routes import convert, upload
 
 
 app = FastAPI(
@@ -7,6 +7,7 @@ app = FastAPI(
     description="Handles file uploads, conversion, and optional content filtering."
 )
 
+app.include_router(upload.router, prefix="/api/v1/upload", tags=["Upload"])
 app.include_router(convert.router, prefix="/api/v1/convert", tags=["Conversion"])
 
 @app.get("/")
