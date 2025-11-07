@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, Form
 from fastapi.responses import JSONResponse
-from services.converter import convert_file
-from services.filters import apply_filters
+from app.services.convertor import convert_file
+from app.services.filters import apply_filters
 
 router = APIRouter()
 
