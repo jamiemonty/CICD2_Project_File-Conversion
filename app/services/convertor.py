@@ -1,5 +1,6 @@
 import os
 import tempfile
+import pypandoc
 
 async def convert_file(file, target_format: str) -> str:
     """
@@ -12,10 +13,18 @@ async def convert_file(file, target_format: str) -> str:
         tmp.write(await file.read())
         tmp_path = tmp.name
 
-    # conversion logic placeholder.
-    print(f"[DEBUG] Pretending to convert {tmp_path} to {target_format}")
-
     # Simulate an output file path
     output_path = f"{tmp_path}_converted.{target_format}"
+
+    print(f"Starting to convert {tmp_path} to {target_format}")
+
+    formatSupported = ['txt', 'docx', 'pdf']
+
+    if target_format not in formatSupported:
+        raise ValueError(f"Unsupported text format: {target_format}")
+    
+    pypandoc.convert_file(tmp_path, target_format, outputfile=output_path)
+
+    print(f"file Conversion Successful... {output_path}")
 
     return output_path
