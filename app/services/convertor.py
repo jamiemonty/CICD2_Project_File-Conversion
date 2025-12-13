@@ -13,6 +13,43 @@ except OSError:
 UPLOAD_DIR = "converted_files"
 os.makedirs(UPLOAD_DIR, exist_ok=True)  # make sure directory exists
 
+def convert_to_txt(input_path: str, input_ext: str, output_txt_path: str):
+    input_format_map = {
+        ".txt": "markdown",
+        ".docx": "docx"
+    }[input_ext]
+
+    input_format = input_format_map.get(input_ext)
+    if not input_format:
+        raise HTTPException(400, "Unsupported input format for text conversion")
+
+    pypandoc.convert_file(
+        input_path,
+        to="plain",
+        format=input_format,
+        outputfile=output_txt_path
+    )
+
+def convert_from_txt(txt_path: str, target_format: str, output_path: str):
+    """
+    Converts plain text (.txt) into the requested output format.
+    """
+    output_format_map = {
+        "txt": "plain",
+        "docx": "docx"
+    }
+
+    output_format = output_format_map.get(target_format)
+    if not output_format:
+        raise HTTPException(400, "Unsupported output format")
+
+    pypandoc.convert_file(
+        txt_path,
+        to=output_format,
+        format="plain",
+        outputfile=output_path
+    )
+
 async def convert_file(file, target_format: str) -> str:
     
     if file is None:
@@ -56,13 +93,16 @@ async def convert_file(file, target_format: str) -> str:
         print(f"Failed to save uploaded file: {e}")
         raise HTTPException(status_code=500, detail="Failed to save uploaded file.") from e
     
+
     format_map = {
-        ".txt": "plain",   # treat .txt as plain text
+        #".txt": "plain",   # treat .txt as plain text
+        ".txt": "markdown",
         ".docx": "docx"
     }
 
     output_format_map = {
-        "txt": "plain",   # treat txt as plain text
+        #"txt": "plain",   # treat txt as plain text
+        "txt": "markdown",
         "docx": "docx"
     }
 
@@ -74,11 +114,11 @@ async def convert_file(file, target_format: str) -> str:
         pypandoc.convert_file(input_path, to=pandoc_format, format=input_format, outputfile=output_path)
         print(f"file Conversion Successful... {output_path}")
 
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Conversion failed:") from e
-
     #except Exception as e:
-    #    print("CONVERSION ERROR:", repr(e))
-    #    raise HTTPException(status_code=500, detail=f"Conversion failed: {str(e)}")
+    #    raise HTTPException(status_code=500, detail=f"Conversion failed:") from e
+
+    except Exception as e:
+        print("CONVERSION ERROR:", repr(e))
+        raise HTTPException(status_code=500, detail=f"Conversion failed: {str(e)}")
 
     return output_path
