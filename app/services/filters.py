@@ -6,7 +6,7 @@ from app.services.spellchecker import load_wordlist, spellcheck_text
 
 
 
-async def apply_filters(file_path: str, run_profanity: bool, run_spellcheck: bool, banned_words_path: str = "app/resources/bad_words.txt", wordlist_path: str = "app/resources/wordlist.txt"):
+async def apply_filters(file_path: str, run_profanity: bool, run_spellcheck: bool, banned_words_path: str = "app/resources/banned_words.txt", wordlist_path: str = "app/resources/wordlist.txt"):
     """
     Used for applying filters to a text file.
     Profanity filter and spellchecker.
