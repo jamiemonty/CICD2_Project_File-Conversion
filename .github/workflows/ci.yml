@@ -2,10 +2,10 @@ name: Build & Push Image
 on:
   push:  
     branches: [main, master]
-  workflow_dispatch: 
+  workflow_dispatch:  
 
 jobs:
-  docker:  
+  docker:   
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -30,4 +30,4 @@ jobs:
           push: true
           tags: |
             ${{ env.IMAGE }}:latest
-            ${{ env.IMAGE }}: ${{ github.sha }}
+            ${{ env.IMAGE }}:${{ github.sha }}
